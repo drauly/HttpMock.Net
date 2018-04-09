@@ -20,6 +20,11 @@ namespace HttpMock.Net
             _server = server;
         }
 
+        public void Clear()
+        {
+            RequestHandlers.Clear();
+        }
+
         public void Dispose()
         {
             _server?.Dispose();
