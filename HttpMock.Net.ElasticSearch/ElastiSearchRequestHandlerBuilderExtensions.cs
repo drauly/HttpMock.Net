@@ -21,7 +21,7 @@ namespace HttpMock.Net.ElasticSearch
                     return true;
                 }
 
-                var body = string.Empty;
+                string body;
                 using (var streamReader = new StreamReader(context.Request.Body))
                 {
                     body = streamReader.ReadToEndAsync().Result;
