@@ -25,11 +25,13 @@ namespace HttpMock.Net
             return handlerBuilder;
         }
 
-        private static void Configure(IApplicationBuilder app, HttpHandlerBuilder stub)
+        private static void Configure(IApplicationBuilder app, HttpHandlerBuilder requestHandlerBuilder)
         {
             app.Run(async context =>
             {
-                var handler = stub.RequestHandlers.FirstOrDefault(rm => rm.Key(context));
+                requestHandlerBuilder.AddReceivedRequest(context);
+
+                var handler = requestHandlerBuilder.RequestHandlers.FirstOrDefault(rm => rm.Key(context));
 
                 if (!handler.Equals(default(KeyValuePair<Func<HttpContext, bool>, Action<HttpContext>>)))
                 {
