@@ -5,19 +5,26 @@ using System.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace HttpMock.Net
 {
     public class Server
     {
-        public static HttpHandlerBuilder Start(int port)
+        public static HttpHandlerBuilder Start(int port, Action<ILoggingBuilder> loggingBuilder = null)
         {
             var handlerBuilder = new HttpHandlerBuilder();
 
-            var webHost = new WebHostBuilder()
+            var webHostBuilder = new WebHostBuilder()
                 .UseKestrel(k => k.Listen(IPAddress.Any, port))
-                .Configure(app => Configure(app, handlerBuilder))
-                .Build();
+                .Configure(app => Configure(app, handlerBuilder));
+
+            if (loggingBuilder != null)
+            {
+                webHostBuilder.ConfigureLogging(loggingBuilder);
+            }
+
+            var webHost = webHostBuilder.Build();
 
             handlerBuilder.SetServer(webHost);
             webHost.Start();
@@ -39,8 +46,8 @@ namespace HttpMock.Net
                 }
                 else
                 {
-                    await context.Response.WriteAsync("no handler found for this request");
                     context.Response.StatusCode = 400;
+                    await context.Response.WriteAsync("no handler found for this request");
                 }
             });
         }
