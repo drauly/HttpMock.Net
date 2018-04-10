@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace HttpMock.Net.ElasticSearch
 {
@@ -22,9 +24,11 @@ namespace HttpMock.Net.ElasticSearch
                 }
 
                 string body;
-                using (var streamReader = new StreamReader(context.Request.Body))
+                context.Request.EnableRewind();
+                using (var streamReader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true))
                 {
                     body = streamReader.ReadToEndAsync().Result;
+                    context.Request.Body.Seek(0, SeekOrigin.Begin);
                 }
 
 
