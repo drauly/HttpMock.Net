@@ -1,8 +1,12 @@
 HttpMock.Net is a simple Http Server mock, usefull for integration testing. It's based on AspNetCore request handling, so you have full control on request and response.
 
-nuget : 
+Base lib           
 
-![Nuget](https://img.shields.io/nuget/dt/HttpMock.Net.svg)
+[![Nuget](https://img.shields.io/nuget/dt/HttpMock.Net.svg)](https://www.nuget.org/packages/HttpMock.Net/)
+
+elastic extensions 
+
+[![Nuget](https://img.shields.io/nuget/dt/HttpMock.Net.ElasticSearch.svg)](https://www.nuget.org/packages/HttpMock.Net.ElasticSearch/)
 
 
 #### Simple example :
