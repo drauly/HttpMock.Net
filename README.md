@@ -11,10 +11,10 @@ nuget :
 var server = Server.Start(8888);
 
 server.WhenGet("/my/url")
-	  .Respond(new { Prop = "my response" });
+      .Respond(new { Prop = "my response" });
 ```
 
-You can then open browser at ```http://localhost:8888/my/url``` to check to result
+You can then open browser at ```http://localhost:8888/my/url``` to check the result
 
 If you want to check that your endpoint actually receive requests :
 
